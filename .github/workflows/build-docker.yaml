@@ -8,11 +8,17 @@ jobs:
     publish_images:
         runs-on: ubuntu-latest
         steps:
-            - name: checkout repository
+            - name: Checkout Repository
               uses: actions/checkout@v4
-            - name: build image
-              run: docker build . -t austinm04/swapi-script:latest
-            - name: push image to docker hub
+            - name: Build and Push Image to GHCR
               run: |
-                docker login -u austinm04 -p ${{ secrets.DOCKER_HUB_TOKEN }}
-                docker push austinm04/swapi-script:latest
+                # Using the repository owner as part of the image tagging process
+                OWNER="${{ github.repository_owner }}"
+                # Converting to lowercase to comply with Docker image naming conventions
+                OWNER="${OWNER,,}"
+                # Defining image name to ensure consistency and a DRY approach
+                IMAGE_NAME="ghcr.io/$OWNER/swapi-script:latest"
+                # Making sure to login using stdin to avoid leaking secrets in logs
+                echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u $OWNER --password-stdin
+                docker build . -t $IMAGE_NAME
+                docker push $IMAGE_NAME
