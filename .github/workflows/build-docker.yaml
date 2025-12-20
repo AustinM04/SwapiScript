@@ -14,4 +14,5 @@ jobs:
               run: docker build . -t austinm04/swapi-script:latest
             - name: push image to docker hub
               run: |
+                docker login -u austinm04 -p ${{ secrets.DOCKER_HUB_PASSWORD }}
                 docker push austinm04/swapi-script:latest
