@@ -1,0 +1,17 @@
+name: Build and Publish image to Docker Hub
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+    publish_images:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v4
+            - name: build image
+              run: docker build . -t austinm04/swapi-script:latest
+            - name: push image to docker hub
+              run: |
+                docker push austinm04/swapi-script:latest
