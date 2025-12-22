@@ -2,10 +2,12 @@
 # SwapiScript.sh
 # This script fetches and displays starship names from the Star Wars API (SWAPI).
 # Introduction text that introduces the script
+separator_bar="---------------------------------------------"
+
 echo "----Starting SWAPI Starships Fetch Script----"
-echo "---------------------------------------------"
+echo $separator_bar
 echo "A long time ago in a galaxy far, far away...."
-echo "---------------------------------------------"
+echo $separator_bar
 
 # Using the base url for starships, variable is later used to hold the next page url
 next_url=https://swapi.dev/api/starships/
@@ -17,7 +19,7 @@ count=$(curl -k -sS $next_url | jq '.count')
 
 # Displaying the total count of starships
 echo "Total Starships: $count"
-echo "---------------------------------------------"
+echo $separator_bar
 echo "Starship Names and their Pilots:"
 
 # Looping through all pages of starships
@@ -25,6 +27,7 @@ while [ "$next_url" != "null" ] && [ -n "$next_url" ]; do
 
     # Used for debugging purposes to show which page is being fetched
     echo "Fetching starships from: $next_url"
+    echo $separator_bar
 
     # Fetching the current page of starships and storing the response
     response=$(curl -k -sS $next_url)
