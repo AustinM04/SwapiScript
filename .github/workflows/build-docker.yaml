@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: read
+  packages: write
 
 jobs:
     publish_images:
@@ -11,6 +14,9 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
             - name: Build and Push Image to GHCR
+              env:
+                # Using the built in token instead of a Personal Access Token
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                 # Using the repository owner as part of the image tagging process
                 OWNER="${{ github.repository_owner }}"
@@ -19,6 +25,6 @@ jobs:
                 # Defining image name to ensure consistency and a DRY approach
                 IMAGE_NAME="ghcr.io/$OWNER/swapi-script:latest"
                 # Making sure to login using stdin to avoid leaking secrets in logs
-                echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u $OWNER --password-stdin
+                echo "$GH_TOKEN" | docker login ghcr.io -u $OWNER --password-stdin
                 docker build . -t $IMAGE_NAME
                 docker push $IMAGE_NAME
