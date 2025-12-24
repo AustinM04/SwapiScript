@@ -2,6 +2,17 @@
 # SwapiScript.sh
 # This script fetches and displays starship names from the Star Wars API (SWAPI).
 # Introduction text that introduces the script
+
+# Notes: 
+#      - I use -sS for curl, which silently handles errors and prints out the error
+#      - I use -k for any access to the swapi API while ignoring the SSL certificate
+#           which is used because they have an expired ssl certificate right now for
+#           production this approach should be avoided because it is not secure
+#      - This script fetches the count first, then prints the count so that the
+#           user can know how many ships to expect
+
+
+# Variable used for a DRYer approach
 separator_bar="---------------------------------------------"
 
 echo "----Starting SWAPI Starships Fetch Script----"
@@ -16,9 +27,14 @@ next_url=https://swapi.dev/api/starships/
 # Using -k to ignore SSL certificate issues, which SWAPI is currently having
 # During production use, -k  (if possible) be avoided to ensure secure connections
 count=$(curl -k -sS $next_url | jq '.count')
+if [ -z "$count" ]; then
+    # Displaying an error message if the count was empty
+    echo "Error getting the count of starships"
+else
+    # Displaying the total count of starships
+    echo "Total Starships: $count"
+fi
 
-# Displaying the total count of starships
-echo "Total Starships: $count"
 echo $separator_bar
 echo "Starship Names and their Pilots:"
 
@@ -31,6 +47,10 @@ while [ "$next_url" != "null" ] && [ -n "$next_url" ]; do
 
     # Fetching the current page of starships and storing the response
     response=$(curl -k -sS $next_url)
+    if [ -z "$response" ]; then
+        echo "Error: Failed to fetch data. Exiting."
+        exit 1
+    fi
 
     # Setting the next_url to the next page link from the response
     next_url=$(echo "$response" | jq -r '.next')
@@ -63,7 +83,13 @@ while [ "$next_url" != "null" ] && [ -n "$next_url" ]; do
 
                 # Fetching the pilot's name from the pilot URL
                 pilot_name=$(curl -k -sS $pilot_url | jq -r '.name')
-                echo "    - $pilot_name"
+
+                # Error checking to gracefully handle errors
+                if [ -z "$pilot_name"]; then
+                    echo "  - Error getting information"
+                else
+                    echo "    - $pilot_name"
+                fi
             done
         fi
 
