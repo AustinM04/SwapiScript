@@ -42,8 +42,8 @@ echo "Starship Names and their Pilots:"
 while [ "$next_url" != "null" ] && [ -n "$next_url" ]; do
 
     # Used for debugging purposes to show which page is being fetched
-    echo "Fetching starships from: $next_url"
-    echo $separator_bar
+    # echo "Fetching starships from: $next_url"
+    # echo $separator_bar
 
     # Fetching the current page of starships and storing the response
     response=$(curl -k -sS $next_url)
@@ -85,7 +85,7 @@ while [ "$next_url" != "null" ] && [ -n "$next_url" ]; do
                 pilot_name=$(curl -k -sS $pilot_url | jq -r '.name')
 
                 # Error checking to gracefully handle errors
-                if [ -z "$pilot_name"]; then
+                if [ -z "$pilot_name" ]; then
                     echo "  - Error getting information"
                 else
                     echo "    - $pilot_name"
@@ -100,5 +100,8 @@ done
 
 # Ending text to show that the script has finished running
 echo ""
-echo "----Finished fetching all starships & their pilots!----"
+echo "$separator_bar"
+echo "Done fetching all starships & their pilots!"
+echo "$separator_bar"
+echo ""
 exit 0
