@@ -1,11 +1,8 @@
-name: Build and Publish image to Docker Hub
+name: Build and Publish image to GHCR
 on:
   push:
     branches:
       - main
-permissions:
-  contents: read
-  packages: write
 
 jobs:
     publish_images:
