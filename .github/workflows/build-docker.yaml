@@ -10,6 +10,9 @@ permissions:
 jobs:
     publish_images:
         runs-on: ubuntu-latest
+        permissions:
+          contents: read
+          packages: write
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
