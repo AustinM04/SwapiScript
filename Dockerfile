@@ -10,8 +10,11 @@ RUN apt-get update && apt-get install -y \
 # Using an environment variable for the script path for a DRY approach
 ENV SCPATH="/usr/local/bin/script.py"
 
+# Turn off python buffering to see updates in real time
+ENV PYTHONUNBUFFERED=1
+
 # Copy the script to the container
-COPY Script.py $SCPATH
+COPY script.py $SCPATH
 
 # Make the script executable to all users
 RUN chmod +x $SCPATH
