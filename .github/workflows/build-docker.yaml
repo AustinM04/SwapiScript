@@ -18,13 +18,13 @@ jobs:
                 # Using the built in token instead of a Personal Access Token
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                # Using the repository owner as part of the image tagging process
-                OWNER="${{ github.repository_owner }}"
+                # Using the github actor as part of the image tagging process
+                ACTOR="${{ github.actor }}"
                 # Converting to lowercase to comply with Docker image naming conventions
-                OWNER="${OWNER,,}"
+                ACTOR="${ACTOR,,}"
                 # Defining image name to ensure consistency and a DRY approach
-                IMAGE_NAME="ghcr.io/$OWNER/swapi-script:latest"
+                IMAGE_NAME="ghcr.io/$ACTOR/swapi-script:latest"
                 # Making sure to login using stdin to avoid leaking secrets in logs
-                echo "$GH_TOKEN" | docker login ghcr.io -u $OWNER --password-stdin
+                echo "$GH_TOKEN" | docker login ghcr.io -u $ACTOR --password-stdin
                 docker build . -t $IMAGE_NAME
                 docker push $IMAGE_NAME
