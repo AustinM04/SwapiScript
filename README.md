@@ -61,7 +61,7 @@ If I were to deploy this solution in a production environment, I would focus on 
 
 
 
-1. ###### Container Orchestration \& Scaling
+###### 1\. Container Orchestration \& Scaling
 
 Since this is a batch script (runs once and exits), I would use Kubernetes CronJobs.
 
