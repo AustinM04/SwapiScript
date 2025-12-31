@@ -61,7 +61,7 @@ If I were to deploy this solution in a production environment, I would focus on 
 
 
 
-###### 1\. Container Orchestration \& Scaling
+### 1\. Container Orchestration \& Scaling
 
 Since this is a batch script (runs once and exits), I would use Kubernetes CronJobs.
 
@@ -75,7 +75,7 @@ If the dataset were to grow to millions of starships my current approach would b
 
 
 
-###### 2\. Monitoring \& Logging
+### 2\. Monitoring \& Logging
 
 In a production setting we wouldn't want to look at the terminal to see if the script worked, so we could take the following approach for a more robust approach to monitoring and logging.
 
@@ -84,7 +84,7 @@ In a production setting we wouldn't want to look at the terminal to see if the s
 
 
 
-###### 3\. CI/CD Pipeline \& Configuration Management
+### 3\. CI/CD Pipeline \& Configuration Management
 
 I have already implemented the foundation of a CI/CD pipeline using GitHub actions.
 
@@ -93,7 +93,7 @@ I have already implemented the foundation of a CI/CD pipeline using GitHub actio
 
 
 
-###### 4\. Security \& Reliability
+### 4\. Security \& Reliability
 
 * Secrets management: Currently for my GitHub actions workflow, I use GitHub secrets to hide my auth tokens. In a production setting, I would expand this to ensure that no sensitive data such as database passwords or API keys is ever visible in the code.
 * Base images: I would use a base image like python:\*-slim to avoid the pitfalls of using ubuntu, which opens us up to numerous security vulnerabilities by exposing a larger attack surface which includes software that is not needed for the application to run. Additionally, using the slim image significantly reduces the size of the image.
