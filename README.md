@@ -8,7 +8,7 @@ This project queries the Star Wars API to receive all starships and prints each 
 
 
 
-##### Approach:
+## Approach:
 
 I started by breaking the problem down into the smallest testable parts:
 
@@ -35,7 +35,7 @@ Implementation details:
 
 
 
-##### Notes \& Assumptions:
+Notes \& Assumptions:
 
 * SWAPI SLL warning: At the time of writing the script, SWAPI was presenting SSL certificate issues, to get around this the script uses verify=False and disables the resulting urllib3 warnings to keep the stdout clean and readable.
 * The output is designed to be human readable and written to stdout.
@@ -44,18 +44,18 @@ Implementation details:
 
 
 
-##### Running the Container:
+## Running the Container:
 
-1. Ensure docker is installed, open the the terminal and run "docker --version", if docker is not installed, make sure that docker desktop is installed
-2. If docker is installed, in the terminal run "docker pull ghcr.io/austinm04/swapi-script:latest" to pull the latest version of the docker container
-3. To run the docker container, in the terminal run "docker run ghcr.io/austinm04/swapi-script:latest"
+1. Ensure docker is installed, open the the terminal and run `docker --version`, if docker is not installed, make sure that docker desktop is installed
+2. If docker is installed, in the terminal run `docker pull ghcr.io/austinm04/swapi-script:latest` to pull the latest version of the docker container
+3. To run the docker container, in the terminal run `docker run ghcr.io/austinm04/swapi-script:latest`
 4. The script will run and let you know when it is done!
 
 
 
 
 
-##### Production Deployment Considerations:
+## Production Deployment Considerations:
 
 If I were to deploy this solution in a production environment, I would focus on making the script more robust, automated, and secure. This is how I would approach those challenges:
 
